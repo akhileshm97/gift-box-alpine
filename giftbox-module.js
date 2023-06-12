@@ -187,6 +187,7 @@ stickerNames.forEach(name => {
 	// does adding onLoad func makes it synchronous?
 	textureLoader.load(`./images/${name}.svg`, (image) => {
 		stickers[name] = image
+		console.log(image)
 	})
 })
 
