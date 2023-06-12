@@ -185,7 +185,7 @@ const stickers = {}
 const textureLoader = new THREE.TextureLoader()
 stickerNames.forEach(name => {
 	// does adding onLoad func makes it synchronous?
-	textureLoader.load(`/images/${name}.svg`, (image) => {
+	textureLoader.load(`./images/${name}.svg`, (image) => {
 		stickers[name] = image
 	})
 })
