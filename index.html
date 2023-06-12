@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Customize your Gift Box</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+		<link rel="stylesheet" type="text/css" href="./pico.min.css">
+		<link rel="stylesheet" type="text/css" href="./giftbox.css">
+
+		<script type="module">
+			import * as actions from './giftbox-module.js'
+
+			window.actions = actions
+		</script>
+
+	  <script 
+	  	src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+	  	defer 
+	  ></script>
+
+	  <script type="text/javascript" defer>
+			window.addEventListener('DOMContentLoaded', function() {
+				window.actions.init();
+				window.actions.animate();
+			})
+		</script>
+	</head>
+
+	<body>
+
+		<div x-data="colors" class="options left">
+			<div class="input-container">
+				<label for="box-color">Box color</label>
+				<input 
+					type="color" 
+					name="box-color" 
+					id="box-color" 
+					x-model="boxColor" 
+					x-init="$watch('boxColor', () => window.actions.setColor('box', boxColor))" 
+				/>
+			</div>
+
+			<div class="input-container">
+				<label for="lid-color">Lid color</label>
+				<input 
+					type="color" 
+					name="lid-color" 
+					id="lid-color" 
+					x-model="lidColor" 
+					x-init="$watch('lidColor', () => window.actions.setColor('lid', lidColor))" 
+				/>
+			</div>
+		</div>
+
+		<div 
+			x-data="sticker" 
+			x-init="window.actions.setDecalSize(stickerSize)" 
+			class="options right"
+		>
+			<div class="input-container">
+				<label for="sticker-size">Sticker size</label>
+				<input 
+					type="range" 
+					min="0.5"
+					max="2.5"
+					step="0.5" 
+					name="sticker-size" 
+					id="sticker-size" 
+					x-model="stickerSize" 
+					@change="window.actions.setDecalSize(stickerSize)"
+				/>
+				<output x-text="stickerSize"></output>
+			</div>
+
+			<fieldset>
+				<legend>Stickers</legend>
+
+		    <template x-for="name in stickerNames">
+					<div class="radio-option">
+						<input 
+							type="radio" 
+							x-model="currentSticker"
+							:value="name"
+							:id="name"
+							:style="{ backgroundImage: `url(/images/${name}.svg)` }"
+							@change="window.actions.setCurrentSticker(name)"
+						/>
+						<label for="name" x-text="stickerNames.indexOf(name) + 1"></label>
+					</div>
+		    </template>
+			</fieldset>
+			<output x-text="currentSticker"></output>
+		</div>
+
+	</body>
+</html>
